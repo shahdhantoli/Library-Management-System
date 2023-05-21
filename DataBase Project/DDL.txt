@@ -1,0 +1,58 @@
+create table book (
+id number primary key,
+title varchar(255),
+category varchar(255),
+publication_year date,
+copies_owned number
+);
+
+create table author(
+id number primary key,
+first_name varchar(255),
+last_name varchar(255)
+);
+
+create table book_author(
+book_id number references book(id),
+author_id number references author(id),
+constraint pk_book_author primary key (book_id,author_id)
+);
+
+create table member(
+id number primary key,
+first_name varchar(255),
+last_name varchar(255),
+join_date date,
+status varchar(255)
+);
+
+create table reservation(
+id number primary key,
+book_id references book(id),
+member_id references member(id),
+reservation_date date,
+status varchar(255)
+);
+
+create table borrowing(
+id number primary key,
+book_id references book(id),
+member_id references member(id),
+borrow_date date,
+return_date date
+);
+
+create table fine(
+id number primary key,
+borrowing_id references borrowing(id),
+member_id references member(id),
+fine_date date,
+fine_amount number
+);
+
+create table payment(
+id number primary key,
+member_id references member(id),
+payment_date date,
+payment_amount number
+);
